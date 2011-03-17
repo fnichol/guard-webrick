@@ -4,15 +4,23 @@ require "guard-webrick/version"
 
 Gem::Specification.new do |s|
   s.name        = "guard-webrick"
-  s.version     = Guard::Webrick::VERSION
+  s.version     = Guard::WebrickVersion::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["TODO: Write your name"]
-  s.email       = ["TODO: Write your email address"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.authors     = ['Fletcher Nichol']
+  s.email       = ['fnichol@nichol.ca']
+  s.homepage    = 'http://rubygems.org/gems/guard-webrick'
+  s.summary     = %q{Guard gem for WEBrick}
+  s.description = %q{Guard::WEBrick automatically starts and restarts WEBrick when needed.}
 
+  s.required_rubygems_version = '>= 1.3.6'
   s.rubyforge_project = "guard-webrick"
+
+  s.add_dependency 'guard', '~> 0.3'
+
+  s.add_development_dependency 'bundler',       '~> 1.0.10'
+  s.add_development_dependency 'rspec',         '~> 2.5.0'
+  s.add_development_dependency 'guard-rspec',   '~> 0.2.0'
+  s.add_development_dependency 'guard-bundler', '~> 0.1.1'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
