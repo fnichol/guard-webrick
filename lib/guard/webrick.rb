@@ -6,30 +6,39 @@ module Guard
 
     autoload :Runner, 'guard/webrick/runner'
 
+    attr_accessor :runner
+
     def initialize(watchers=[], options={})
       super
-      # init stuff here
+      @options = {
+        :host       => '0.0.0.0',
+        :port       => 3000,
+        :launch_url => true
+      }.update(options)
     end
 
     # =================
     # = Guard methods =
     # =================
 
+    # Call once when guard starts
     def start
-      Runner.new(
-        :host       => '0.0.0.0',
-        :port       => '3000',
-        :launch_url => true
-      )
-      true
+      @runner = Runner.new(@options)
     end
 
+    # Call with Ctrl-C signal (when Guard quit)
     def stop
-      true
+      runner.stop
     end
 
-    def run_on_change(paths)
-      true
+    # Call with Ctrl-Z signal
+    def reload
+      runner.restart
+    end
+
+    # Call on file(s) modifications
+    def run_on_change(paths = {})
+      runner.restart
     end
   end
 end
