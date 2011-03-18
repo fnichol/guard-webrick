@@ -34,9 +34,9 @@ module Guard
       def fork_child_pid
         @pid = Process.fork do
           server = ::WEBrick::HTTPServer.new(
-            :BindAddress    => @options[:host],
-            :Port           => @options[:port],
-            :RootDirectory  => Dir::pwd
+            :BindAddress  => @options[:host],
+            :Port         => @options[:port],
+            :DocumentRoot => Dir::pwd
           )
           %w{INT HUP}.each { |sig| Signal.trap(sig){ server.shutdown } }
           server.start

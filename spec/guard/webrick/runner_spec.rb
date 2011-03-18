@@ -19,9 +19,9 @@ describe Guard::WEBrick::Runner do
     it "should create a WEBrick::HTTPServer instance" do
       Process.stub(:fork) do |block|
         ::WEBrick::HTTPServer.should_receive(:new).with(
-          :BindAddress    => '0.0.0.0',
-          :Port           => 3000,
-          :RootDirectory  => Dir::pwd
+          :BindAddress  => '0.0.0.0',
+          :Port         => 3000,
+          :DocumentRoot => Dir::pwd
         )
         block.call
       end
