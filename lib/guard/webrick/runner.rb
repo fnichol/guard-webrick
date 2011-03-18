@@ -7,22 +7,30 @@ module Guard
       attr_reader :pid
       
       def initialize(options)
-        @pid = Process.fork do
-          server = ::WEBrick::HTTPServer.new(
-            :BindAddress  => options[:host],
-            :Port         => options[:port]
-          )
-          %w{INT HUP}.each do |sig|
-            Signal.trap(sig){ server.shutdown }
-          end
-          server.start
-        end
+        @options = options
+      end
+
+      def start
+        fork_child_pid
       end
 
       def stop
         Process.kill("HUP", pid)
         @pid = nil
         true
+      end
+
+    private
+
+      def fork_child_pid
+        @pid = Process.fork do
+          server = ::WEBrick::HTTPServer.new(
+            :BindAddress  => @options[:host],
+            :Port         => @options[:port]
+          )
+          %w{INT HUP}.each { |sig| Signal.trap(sig){ server.shutdown } }
+          server.start
+        end
       end
     end
   end
