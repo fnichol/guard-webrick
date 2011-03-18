@@ -38,19 +38,31 @@ describe Guard::WEBrick::Runner do
     it "should kill the process running the HTTPServer" do
       Process.stub(:fork).and_return(12345)
       Process.should_receive(:kill).with("HUP", 12345)
-      new_runner.stop
+      subject = new_runner
+      subject.stop
+    end
+
+    it "should set the pid back to nil" do
+      Process.stub(:fork).and_return(12345)
+      Process.should_receive(:kill).with("HUP", 12345)
+      subject = new_runner
+      subject.stop
+      subject.pid.should be_nil
     end
 
     it "should shutdown the WEBrick::HTTPServer instance" do
       make_fake_forked_server
       Signal.trap("USR1") { @css = true }
 
-      r = new_runner
+      subject = new_runner
       sleep 0.05    # wait for HTTPServer to fork and start
-      r.stop
+      subject.stop
       sleep 0.05    # wait to get USR1 signal from child pid
       @css.should be_true
     end
+  end
+
+  describe "restart" do
   end
 end
 
