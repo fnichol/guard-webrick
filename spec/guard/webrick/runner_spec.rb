@@ -34,6 +34,13 @@ describe Guard::WEBrick::Runner do
       end
       subject.start
     end
+
+    it "should display an error message if server is running" do
+      Process.stub(:fork).and_return(12345)
+      subject.start
+      Guard::UI.should_receive(:error).with("An instance of WEBrick::HTTPServer is already running.")
+      subject.start
+    end
   end
 
   describe "stop" do

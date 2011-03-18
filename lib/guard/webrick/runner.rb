@@ -11,7 +11,11 @@ module Guard
       end
 
       def start
-        fork_child_pid
+        if pid
+          UI.error "An instance of WEBrick::HTTPServer is already running."
+        else
+          fork_child_pid
+        end
       end
 
       def stop
