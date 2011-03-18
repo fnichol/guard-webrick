@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "guard-webrick/version"
+require "guard/webrick/version"
 
 Gem::Specification.new do |s|
   s.name        = "guard-webrick"
-  s.version     = Guard::WebrickVersion::VERSION
+  s.version     = Guard::WEBrickVersion::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Fletcher Nichol']
   s.email       = ['fnichol@nichol.ca']
