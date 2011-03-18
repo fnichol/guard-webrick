@@ -24,21 +24,25 @@ module Guard
 
     # Call once when guard starts
     def start
+      UI.info "Starting up WEBrick..."
       runner.start
     end
 
     # Call with Ctrl-C signal (when Guard quit)
     def stop
+      UI.info "Shutting down WEBrick..."
       runner.stop
     end
 
     # Call with Ctrl-Z signal
     def reload
+      UI.info "Restarting WEBrick..."
       runner.restart
     end
 
     # Call on file(s) modifications
     def run_on_change(paths = {})
+      UI.info "Restarting WEBrick..."
       runner.restart
     end
   end
