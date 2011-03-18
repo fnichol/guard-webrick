@@ -24,6 +24,11 @@ module Guard
         true
       end
 
+      def restart
+        stop
+        start
+      end
+
     private
 
       def fork_child_pid

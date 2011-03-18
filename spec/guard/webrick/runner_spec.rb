@@ -75,6 +75,14 @@ describe Guard::WEBrick::Runner do
   end
 
   describe "restart" do
+
+    it "should call stop then start" do
+      subject = new_runner
+      subject.start
+      subject.should_receive(:stop).ordered
+      subject.should_receive(:start).ordered
+      subject.restart
+    end
   end
 end
 
