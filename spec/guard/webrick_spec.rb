@@ -45,15 +45,23 @@ describe Guard::WEBrick do
     end
   end
 
-  describe "start" do
+  describe "initialize" do
 
-    it "should start a server instance with default options" do
-      subject = Guard::WEBrick.new([])
+    it "should create a server instance with default options" do
       Guard::WEBrick::Runner.should_receive(:new).with(
         :host       => '0.0.0.0',
         :port       => 3000,
         :launch_url => true
       )
+      Guard::WEBrick.new([])
+    end
+  end
+
+  describe "start" do
+    it "should start the server instance" do
+      runner = mock(Guard::WEBrick::Runner)
+      subject.stub(:runner).and_return(runner)
+      runner.should_receive(:start)
       subject.start
     end
   end

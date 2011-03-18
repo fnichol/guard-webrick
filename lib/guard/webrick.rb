@@ -15,6 +15,7 @@ module Guard
         :port       => 3000,
         :launch_url => true
       }.update(options)
+      @runner = Runner.new(@options)
     end
 
     # =================
@@ -23,7 +24,7 @@ module Guard
 
     # Call once when guard starts
     def start
-      @runner = Runner.new(@options)
+      runner.start
     end
 
     # Call with Ctrl-C signal (when Guard quit)
