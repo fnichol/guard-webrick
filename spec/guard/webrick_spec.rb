@@ -35,6 +35,19 @@ describe Guard::WEBrick do
       end
     end
 
+    describe "docroot" do
+
+      it "should be Dir::pwd by default" do
+        subject = Guard::WEBrick.new([])
+        subject.options[:docroot].should == Dir::pwd
+      end
+
+      it "should be set to #{File.join(Dir::pwd, 'public')}" do
+        subject = Guard::WEBrick.new([], { :docroot => File.join(Dir::pwd, 'public') })
+        subject.options[:docroot].should == File.join(Dir::pwd, 'public')
+      end
+    end
+
     describe "launchy" do
 
       it "should be true by default" do
@@ -57,6 +70,18 @@ describe Guard::WEBrick do
     end
 
     it "should spawn the server instance" do
+      subject = Guard::WEBrick.new([], { :host => '127.0.2.5', :port => 8080,
+        :docroot => '/tmp' })
+      subject.stub(:wait_for_port)
+      Spoon.should_receive(:spawnp).with( 'ruby',
+        File.expand_path(File.join(File.dirname(__FILE__),
+          %w{.. .. lib guard webrick server.rb})),
+        '127.0.2.5', '8080', '/tmp'
+      )
+      subject.start
+    end
+
+    it "should pass startup options to the server instance" do
       Spoon.should_receive(:spawnp).with( 'ruby',
         File.expand_path(File.join(File.dirname(__FILE__),
           %w{.. .. lib guard webrick server.rb})),

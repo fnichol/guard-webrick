@@ -34,7 +34,7 @@ Please read {Guard doc}[http://github.com/guard/guard#readme] for more info abou
 
 The WEBrick guard has 3 options that you can set like this:
 
-    guard 'webrick', :host => '127.0.0.1', :port => '35728' do
+    guard 'webrick', :host => '127.0.0.1', :port => '35728', :docroot => 'public' do
       ...
     end
 
@@ -42,6 +42,7 @@ Available options:
 
     :host => '127.3.3.1'     # default '0.0.0.0'
     :port => '12345'         # default '3000'
+    :docroot => 'public'     # default current working directory
     :launchy => false        # default true
 
 == Development

@@ -15,6 +15,7 @@ module Guard
       @options = {
         :host       => '0.0.0.0',
         :port       => 3000,
+        :docroot    => Dir::pwd,
         :launchy    => true
       }.update(options)
     end
@@ -34,7 +35,7 @@ module Guard
           File.expand_path(File.join(File.dirname(__FILE__), %w{webrick server.rb})),
           @options[:host],
           @options[:port].to_s,
-          Dir::pwd
+          @options[:docroot]
         )
         wait_for_port
         if @options[:launchy]
