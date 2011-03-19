@@ -1,6 +1,6 @@
 = Guard::WEBrick
 
-Guard::WEBrick automatically starts and restarts WEBrick when needed.
+Guard::WEBrick automatically starts and restarts WEBrick when needed. Useful when you are working on a static site but want to benefit from {Guard::LiveReload}[http://github.com/guard/guard-livereload].
 
 == Install
 
