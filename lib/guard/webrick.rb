@@ -34,7 +34,10 @@ module Guard
           @options[:port].to_s,
           Dir::pwd
         )
-        Launchy.open("http://#{@options[:host]}:#{@options[:port]}")
+        if @options[:launchy]
+          Launchy.open("http://#{@options[:host]}:#{@options[:port]}")
+          @options[:launchy] = false  # only run once
+        end
         @pid
       end
     end

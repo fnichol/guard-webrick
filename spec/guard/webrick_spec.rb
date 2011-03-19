@@ -85,6 +85,12 @@ describe Guard::WEBrick do
       Launchy.should_receive(:open).with("http://0.0.0.0:3000")
       subject.start
     end
+
+    it "should not open a web browser if disabled" do
+      subject = Guard::WEBrick.new([], { :launchy => false })
+      Launchy.should_not_receive(:open)
+      subject.start
+    end
   end
 
   describe "stop" do
@@ -134,6 +140,13 @@ describe Guard::WEBrick do
 
       it "should return true" do
         subject.send(method).should be_true
+      end
+
+      it "should only open a web browser the first time" do
+        subject = Guard::WEBrick.new([], { :launchy => true })
+        Launchy.should_receive(:open).once
+        subject.start
+        subject.send(method)
       end
     end
   end
