@@ -2,6 +2,8 @@ require 'guard'
 require 'guard/guard'
 require 'spoon'
 require 'launchy'
+require 'socket'
+require 'timeout'
 
 module Guard
   class WEBrick < Guard
@@ -34,6 +36,7 @@ module Guard
           @options[:port].to_s,
           Dir::pwd
         )
+        wait_for_port
         if @options[:launchy]
           Launchy.open("http://#{@options[:host]}:#{@options[:port]}")
           @options[:launchy] = false  # only run once
@@ -80,6 +83,31 @@ module Guard
       rescue Errno::ESRCH
         false
       end
+    end
+
+    def wait_for_port
+      while true do
+        sleep 0.2
+        port_open?(@options[:host], @options[:port]) and return
+      end
+    end
+
+    # thanks to: http://bit.ly/bVN5AQ
+    def port_open?(addr, port)
+      begin
+        Timeout::timeout(1) do
+          begin
+            s = TCPSocket.new(addr, port)
+            s.close
+            return true
+          rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+            return false
+          end
+        end
+      rescue Timeout::Error
+      end
+
+      return false
     end
   end
 end

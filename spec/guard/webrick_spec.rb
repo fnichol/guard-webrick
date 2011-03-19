@@ -53,6 +53,7 @@ describe Guard::WEBrick do
 
     before(:each) do
       Spoon.stub(:spawnp).and_return(123456)
+      subject.stub(:wait_for_port)
     end
 
     it "should spawn the server instance" do
@@ -88,6 +89,7 @@ describe Guard::WEBrick do
 
     it "should not open a web browser if disabled" do
       subject = Guard::WEBrick.new([], { :launchy => false })
+      subject.stub(:wait_for_port)
       Launchy.should_not_receive(:open)
       subject.start
     end
@@ -99,6 +101,7 @@ describe Guard::WEBrick do
       Spoon.stub(:spawnp).and_return(123456)
       Process.stub(:wait)
       Process.stub(:kill)
+      subject.stub(:wait_for_port)
       subject.start
     end
 
@@ -129,6 +132,7 @@ describe Guard::WEBrick do
         Spoon.stub(:spawnp).and_return(123456)
         Process.stub(:wait)
         Process.stub(:kill)
+        subject.stub(:wait_for_port)
         subject.start
       end
 
@@ -144,6 +148,7 @@ describe Guard::WEBrick do
 
       it "should only open a web browser the first time" do
         subject = Guard::WEBrick.new([], { :launchy => true })
+        subject.stub(:wait_for_port)
         Launchy.should_receive(:open).once
         subject.start
         subject.send(method)
