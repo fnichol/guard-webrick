@@ -3,6 +3,10 @@ require 'spec_helper'
 describe Guard::WEBrick do
   subject { Guard::WEBrick.new }
 
+  before(:each) do
+    Launchy.stub(:open)
+  end
+
   describe "options" do
 
     describe "host" do
@@ -74,6 +78,11 @@ describe Guard::WEBrick do
       Process.stub(:getpgid).and_return(true)
       Guard::UI.should_receive(:error).with(
         "Another instance of WEBrick::HTTPServer is running.")
+      subject.start
+    end
+
+    it "should open a web browser page" do
+      Launchy.should_receive(:open).with("http://0.0.0.0:3000")
       subject.start
     end
   end

@@ -1,6 +1,7 @@
 require 'guard'
 require 'guard/guard'
 require 'spoon'
+require 'launchy'
 
 module Guard
   class WEBrick < Guard
@@ -33,6 +34,8 @@ module Guard
           @options[:port].to_s,
           Dir::pwd
         )
+        Launchy.open("http://#{@options[:host]}:#{@options[:port]}")
+        @pid
       end
     end
 
