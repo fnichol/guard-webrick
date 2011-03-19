@@ -35,16 +35,16 @@ describe Guard::WEBrick do
       end
     end
 
-    describe "launch_url" do
+    describe "launchy" do
 
       it "should be true by default" do
         subject = Guard::WEBrick.new([])
-        subject.options[:launch_url].should == true
+        subject.options[:launchy].should == true
       end
 
       it "should be set to false" do
-        subject = Guard::WEBrick.new([], { :launch_url => false })
-        subject.options[:launch_url].should == false
+        subject = Guard::WEBrick.new([], { :launchy => false })
+        subject.options[:launchy].should == false
       end
     end
   end
