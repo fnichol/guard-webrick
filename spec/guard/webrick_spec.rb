@@ -45,44 +45,78 @@ describe Guard::WEBrick do
     end
   end
 
-  describe "initialize" do
-
-    it "should create a server instance with default options" do
-      Guard::WEBrick::Runner.should_receive(:new).with(
-        :host       => '0.0.0.0',
-        :port       => 3000,
-        :launch_url => true
-      )
-      Guard::WEBrick.new([])
-    end
-  end
-
   describe "start" do
-    it "should start the server instance" do
-      runner = mock(Guard::WEBrick::Runner)
-      subject.stub(:runner).and_return(runner)
-      runner.should_receive(:start)
+
+    before(:each) do
+      Spoon.stub(:spawnp).and_return(123456)
+    end
+
+    it "should spawn the server instance" do
+      Spoon.should_receive(:spawnp).with( 'ruby',
+        File.expand_path(File.join(File.dirname(__FILE__),
+          %w{.. .. lib guard webrick server.rb})),
+        '0.0.0.0', '3000', Dir::pwd
+      )
       subject.start
+    end
+
+    it "should set the pid" do
+      subject.start
+      subject.pid.should == 123456
+    end
+
+    it "should return true" do
+      subject.start.should be_true
     end
   end
 
   describe "stop" do
 
-    it "should stop the running server instance" do
-      runner = mock(Guard::WEBrick::Runner)
-      subject.stub(:runner).and_return(runner)
-      runner.should_receive(:stop)
+    before(:each) do
+      Spoon.stub(:spawnp).and_return(123456)
+      Process.stub(:wait)
+      Process.stub(:kill)
+      subject.start
+    end
+
+    it "should kill the server instance" do
+      Process.should_receive(:kill).with("TERM", 123456)
       subject.stop
+    end
+
+    it "should wait for the child process to exit" do
+      Process.should_receive(:wait).with(123456)
+      subject.stop
+    end
+
+    it "should set pid to nil" do
+      subject.stop
+      subject.pid.should be_nil
+    end
+
+    it "should return true" do
+      subject.stop.should be_true
     end
   end
 
   %w{reload run_on_change}.each do |method|
     describe method do
-      it "should restart the server instance" do
-        runner = mock(Guard::WEBrick::Runner)
-        subject.stub(:runner).and_return(runner)
-        runner.should_receive(:restart)
+
+      before(:each) do
+        Spoon.stub(:spawnp).and_return(123456)
+        Process.stub(:wait)
+        Process.stub(:kill)
+        subject.start
+      end
+
+      it "should restart the server" do
+        subject.should_receive(:stop).ordered
+        subject.should_receive(:start).ordered
         subject.send(method)
+      end
+
+      it "should return true" do
+        subject.send(method).should be_true
       end
     end
   end
