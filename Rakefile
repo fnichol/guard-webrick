@@ -11,7 +11,7 @@ namespace(:spec) do
     rubies = if ENV['RUBIES']
                ENV['RUBIES'].split(' ')
              else
-               %w[1.8.6 1.8.7 1.9.2]
+               %w[1.8.7 1.9.2 ree jruby]
              end
     rubies.each do |version|
       rvm_ruby = if ENV['GEMSET']
