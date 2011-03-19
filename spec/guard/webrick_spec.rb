@@ -68,6 +68,14 @@ describe Guard::WEBrick do
     it "should return true" do
       subject.start.should be_true
     end
+
+    it "should warn when server instance is already running" do
+      subject.start
+      Process.stub(:getpgid).and_return(true)
+      Guard::UI.should_receive(:error).with(
+        "Another instance of WEBrick::HTTPServer is running.")
+      subject.start
+    end
   end
 
   describe "stop" do

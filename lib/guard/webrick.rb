@@ -23,12 +23,17 @@ module Guard
     # Call once when guard starts
     def start
       UI.info "Starting up WEBrick..."
-      @pid = Spoon.spawnp('ruby',
-        File.expand_path(File.join(File.dirname(__FILE__), %w{webrick server.rb})),
-        @options[:host],
-        @options[:port].to_s,
-        Dir::pwd
-      )
+      if running?
+        UI.error "Another instance of WEBrick::HTTPServer is running."
+        false
+      else
+        @pid = Spoon.spawnp('ruby',
+          File.expand_path(File.join(File.dirname(__FILE__), %w{webrick server.rb})),
+          @options[:host],
+          @options[:port].to_s,
+          Dir::pwd
+        )
+      end
     end
 
     # Call with Ctrl-C signal (when Guard quit)
@@ -56,6 +61,19 @@ module Guard
       UI.info "Restarting WEBrick..."
       stop
       start
+    end
+
+    def running?
+      begin
+        if @pid
+          Process.getpgid @pid
+          true
+        else
+          false
+        end
+      rescue Errno::ESRCH
+        false
+      end
     end
   end
 end
