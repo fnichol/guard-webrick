@@ -10,7 +10,7 @@ module Guard
         @server = ::WEBrick::HTTPServer.new(
           :BindAddress  => options[:host],
           :Port         => options[:port],
-          :DocumentRoot => options[:docroot]
+          :DocumentRoot => File.expand_path(options[:docroot])
         )
       end
 

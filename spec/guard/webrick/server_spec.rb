@@ -13,6 +13,15 @@ describe Guard::WEBrick::Server do
       )
       new_server
     end
+
+    it "should expand the docroot path" do
+      ::WEBrick::HTTPServer.should_receive(:new).with(
+        :BindAddress  => '0.0.0.0',
+        :Port         => 3000,
+        :DocumentRoot => File.expand_path(File.join(Dir::pwd, 'public'))
+      )
+      new_server(:docroot => 'public')
+    end
   end
 
   describe "start" do
