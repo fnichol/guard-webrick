@@ -1,12 +1,12 @@
-= Guard::WEBrick
+# Guard::WEBrick
 
-Guard::WEBrick automatically starts and restarts WEBrick when needed. Useful when you are working on a static site but want to benefit from {Guard::LiveReload}[http://github.com/guard/guard-livereload].
+Guard::WEBrick automatically starts and restarts WEBrick when needed. Useful when you are working on a static site but want to benefit from [Guard::LiveReload](http://github.com/guard/guard-livereload).
 
-- Tested on Ruby 1.8.7, 1.9.2, Ruby Enterprise Edition, and JRuby
+* Tested on Ruby 1.8.7, 1.9.2, Ruby Enterprise Edition, and JRuby
 
-== Install
+## Install
 
-Please be sure to have {Guard}[http://github.com/guard/guard] installed before continue.
+Please be sure to have [Guard](http://github.com/guard/guard) installed before continue.
 
 Install the gem:
 
@@ -20,19 +20,19 @@ Add guard definition to your Guardfile by running this command:
 
     guard init webrick
 
-== Usage
+## Usage
 
-Please read {Guard usage doc}[http://github.com/guard/guard#readme]
+Please read [Guard usage doc](http://github.com/guard/guard#readme)
 
-== Guardfile
+## Guardfile
 
 You can adapt your 'view' files like you want.
-Please read {Guard doc}[http://github.com/guard/guard#readme] for more info about Guardfile DSL.
+Please read [Guard doc](http://github.com/guard/guard#readme) for more info about Guardfile DSL.
 
     guard 'webrick' do
     end
 
-== Options
+## Options
 
 The WEBrick guard has 3 options that you can set like this:
 
@@ -47,14 +47,14 @@ Available options:
     :docroot => 'public'     # default current working directory
     :launchy => false        # default true
 
-== Development
+## Development
 
-- Source hosted at {GitHub}[http://github.com/fnichol/guard-webrick]
-- Report issues/Questions/Feature requests on {GitHub Issues}[http://github.com/fnichol/guard-webrick/issues]
+* Source hosted at [GitHub](http://github.com/fnichol/guard-webrick)
+* Report issues/Questions/Feature requests on [GitHub Issues](http://github.com/fnichol/guard-webrick/issues)
 
 Pull requests are very welcome! Make sure your patches are well tested. Please create a topic branch for every separate change
 you make.
 
 == Authors
 
-{Fletcher Nichol}[http://github.com/fnichol]
+[Fletcher Nichol](http://github.com/fnichol)
