@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'guard', '~> 0.3'
   s.add_dependency 'ffi',   '~> 1.0.7'
   s.add_dependency 'spoon', '~> 0.0.1'
+  s.add_dependency 'launchy', '~> 0.4.0'
 
   s.add_development_dependency 'bundler',       '~> 1.0.10'
   s.add_development_dependency 'rspec',         '~> 2.5.0'
