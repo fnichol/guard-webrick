@@ -35,6 +35,19 @@ describe Guard::WEBrick do
       end
     end
 
+    describe "ssl" do
+
+      it "should be false by default" do
+        subject = Guard::WEBrick.new([])
+        subject.options[:ssl].should be_false
+      end
+
+      it "should be set to true" do
+        subject = Guard::WEBrick.new([], { :ssl => true })
+        subject.options[:ssl].should be_true
+      end
+    end
+
     describe "docroot" do
 
       it "should be Dir::pwd by default" do
@@ -70,13 +83,16 @@ describe Guard::WEBrick do
     end
 
     it "should spawn the server instance" do
-      subject = Guard::WEBrick.new([], { :host => '127.0.2.5', :port => 8080,
+      subject = Guard::WEBrick.new([], {
+        :host => '127.0.2.5',
+        :port => 8080,
+        :ssl => true,
         :docroot => '/tmp' })
       subject.stub(:wait_for_port)
       Spoon.should_receive(:spawnp).with( 'ruby',
         File.expand_path(File.join(File.dirname(__FILE__),
           %w{.. .. lib guard webrick server.rb})),
-        '127.0.2.5', '8080', '/tmp'
+        '127.0.2.5', '8080', 'true', '/tmp'
       )
       subject.start
     end
@@ -85,7 +101,7 @@ describe Guard::WEBrick do
       Spoon.should_receive(:spawnp).with( 'ruby',
         File.expand_path(File.join(File.dirname(__FILE__),
           %w{.. .. lib guard webrick server.rb})),
-        '0.0.0.0', '3000', Dir::pwd
+        '0.0.0.0', '3000', 'false', Dir::pwd
       )
       subject.start
     end

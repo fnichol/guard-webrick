@@ -22,6 +22,17 @@ describe Guard::WEBrick::Server do
       )
       new_server(:docroot => 'public')
     end
+
+    it "should create an ssl server" do
+      ::WEBrick::HTTPServer.should_receive(:new).with(
+        :BindAddress  => '0.0.0.0',
+        :Port         => 3000,
+        :DocumentRoot => Dir::pwd,
+        :SSLEnable    => true,
+        :SSLCertName  => [%w[CN localhost]]
+      )
+      new_server(:ssl => true)
+    end
   end
 
   describe "start" do

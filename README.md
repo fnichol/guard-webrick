@@ -46,6 +46,7 @@ Available options:
 
     :host => '127.3.3.1'     # default '0.0.0.0'
     :port => '12345'         # default '3000'
+    :ssl => true             # default false
     :docroot => 'public'     # default current working directory
     :launchy => false        # default true
 
