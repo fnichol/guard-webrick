@@ -41,7 +41,8 @@ module Guard
         )
         wait_for_port
         if @options[:launchy]
-          Launchy.open("http://#{@options[:host]}:#{@options[:port]}")
+          scheme = options[:ssl] ? "https" : "http"
+          Launchy.open("#{scheme}://#{@options[:host]}:#{@options[:port]}")
           @options[:launchy] = false  # only run once
         end
         @pid

@@ -123,8 +123,15 @@ describe Guard::WEBrick do
       subject.start
     end
 
-    it "should open a web browser page" do
+    it "should open an HTTP web browser page" do
       Launchy.should_receive(:open).with("http://0.0.0.0:3000")
+      subject.start
+    end
+
+    it "should open an HTTPS web browser page" do
+      Launchy.should_receive(:open).with("https://0.0.0.0:3000")
+      subject = Guard::WEBrick.new([], { :ssl => true })
+      subject.stub(:wait_for_port)
       subject.start
     end
 
