@@ -4,7 +4,7 @@
 
 Guard::WEBrick automatically starts and restarts WEBrick when needed. Useful when you are working on a static site but want to benefit from [Guard::LiveReload](http://github.com/guard/guard-livereload).
 
-* Tested on Ruby 1.8.7, 1.9.2, Ruby Enterprise Edition, and JRuby
+* Tested on Ruby 1.9.3, 1.9.2, 1.8.7, Ruby Enterprise Edition, and JRuby (thanks TravisCI!)
 
 ## Install
 
