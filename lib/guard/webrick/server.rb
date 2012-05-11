@@ -1,4 +1,5 @@
 require 'webrick'
+require 'webrick/https'
 
 module Guard
   class WEBrick
@@ -7,11 +8,21 @@ module Guard
       attr_reader :server
 
       def initialize(options = {})
-        @server = ::WEBrick::HTTPServer.new(
-          :BindAddress  => options[:host],
-          :Port         => options[:port],
-          :DocumentRoot => File.expand_path(options[:docroot])
-        )
+        if options[:ssl]
+          @server = ::WEBrick::HTTPServer.new(
+            :BindAddress  => options[:host],
+            :Port         => options[:port],
+            :DocumentRoot => File.expand_path(options[:docroot]),
+            :SSLEnable    => true,
+            :SSLCertName  => [%w[CN localhost]]
+          )
+        else
+          @server = ::WEBrick::HTTPServer.new(
+            :BindAddress  => options[:host],
+            :Port         => options[:port],
+            :DocumentRoot => File.expand_path(options[:docroot])
+          )
+        end
       end
 
       def start
@@ -25,10 +36,11 @@ module Guard
 end
 
 if __FILE__ == $0
-  host, port, docroot = ARGV
+  host, port, ssl, docroot = ARGV
   Guard::WEBrick::Server.new(
     :host     => host,
     :port     => port,
+    :ssl      => ssl == 'true',
     :docroot  => docroot
   ).start
 end
