@@ -1,4 +1,16 @@
-## 0.1.3.dev (unreleased)
+## 0.1.4.dev (unreleased)
+
+
+## 0.1.3 (January 7, 2013)
+
+### Bug fixes
+
+* Update gem dependencies to support current guard release. ([@fnichol][])
+
+### Improvements
+
+* Update TravisCI badge URL. ([@fnichol][])
+* Add Code Climate badge. ([@fnichol][])
 
 
 ## 0.1.2 (May 10, 2012)
