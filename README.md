@@ -1,6 +1,6 @@
 # Guard::WEBrick
 
-[![travis-ci](http://travis-ci.org/fnichol/guard-webrick.png)](http://travis-ci.org/fnichol/guard-webrick)
+[![Build Status](https://travis-ci.org/fnichol/guard-webrick.png?branch=master)](https://travis-ci.org/fnichol/guard-webrick)
 
 Guard::WEBrick automatically starts and restarts WEBrick when needed. Useful when you are working on a static site but want to benefit from [Guard::LiveReload](http://github.com/guard/guard-livereload).
 
