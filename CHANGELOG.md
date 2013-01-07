@@ -1,4 +1,11 @@
-## 0.1.4.dev (unreleased)
+## 0.1.5.dev (unreleased)
+
+
+## 0.1.4 (January 7, 2013)
+
+### Bug fixes
+
+* Add ffi gem as dependency, as needed by spoon gem. ([@fnichol][])
 
 
 ## 0.1.3 (January 7, 2013)
