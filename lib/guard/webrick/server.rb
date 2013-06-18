@@ -14,8 +14,6 @@ module Guard
           :DocumentRoot => File.expand_path(options[:docroot])
         }
 
-        puts options.inspect
-
         if options[:suppress_log]
           config.merge!({
             :Logger       => ::WEBrick::Log.new("/dev/null"),
