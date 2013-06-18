@@ -8,21 +8,29 @@ module Guard
       attr_reader :server
 
       def initialize(options = {})
-        if options[:ssl]
-          @server = ::WEBrick::HTTPServer.new(
-            :BindAddress  => options[:host],
-            :Port         => options[:port],
-            :DocumentRoot => File.expand_path(options[:docroot]),
-            :SSLEnable    => true,
-            :SSLCertName  => [%w[CN localhost]]
-          )
-        else
-          @server = ::WEBrick::HTTPServer.new(
-            :BindAddress  => options[:host],
-            :Port         => options[:port],
-            :DocumentRoot => File.expand_path(options[:docroot])
-          )
+        config = {
+          :BindAddress  => options[:host],
+          :Port         => options[:port],
+          :DocumentRoot => File.expand_path(options[:docroot])
+        }
+
+        puts options.inspect
+
+        if options[:suppress_log]
+          config.merge!({
+            :Logger       => ::WEBrick::Log.new("/dev/null"),
+            :AccessLog    => []
+          })
         end
+
+        if options[:ssl]
+          config.merge!({
+            :SSLEnable    => true,
+            :SSLCertName  => [%w[CN localhost]],
+          })
+        end
+
+        @server = ::WEBrick::HTTPServer.new(config)
       end
 
       def start
@@ -36,11 +44,12 @@ module Guard
 end
 
 if __FILE__ == $0
-  host, port, ssl, docroot = ARGV
+  host, port, ssl, docroot, suppress_log = ARGV
   Guard::WEBrick::Server.new(
-    :host     => host,
-    :port     => port,
-    :ssl      => ssl == 'true',
-    :docroot  => docroot
+    :host         => host,
+    :port         => port,
+    :ssl          => ssl == 'true',
+    :docroot      => docroot,
+    :suppress_log => suppress_log == 'true'
   ).start
 end

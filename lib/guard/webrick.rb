@@ -13,11 +13,12 @@ module Guard
     def initialize(watchers=[], options={})
       super
       @options = {
-        :host       => '0.0.0.0',
-        :port       => 3000,
-        :ssl        => false,
-        :docroot    => Dir::pwd,
-        :launchy    => true
+        :host         => '0.0.0.0',
+        :port         => 3000,
+        :ssl          => false,
+        :docroot      => Dir::pwd,
+        :launchy      => true,
+        :suppress_log => false
       }.update(options)
     end
 
@@ -37,7 +38,8 @@ module Guard
           @options[:host],
           @options[:port].to_s,
           @options[:ssl].to_s,
-          @options[:docroot]
+          @options[:docroot],
+          @options[:suppress_log].to_s
         )
         wait_for_port
         if @options[:launchy]
