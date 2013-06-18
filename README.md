@@ -37,7 +37,7 @@ Please read [Guard doc](http://github.com/guard/guard#readme) for more info abou
 
 ## Options
 
-The WEBrick guard has 3 options that you can set like this:
+The WEBrick guard has 6 options that you can set like this:
 
     guard 'webrick', :host => '127.0.0.1', :port => '35728', :docroot => 'public' do
       ...
@@ -50,6 +50,7 @@ Available options:
     :ssl => true             # default false
     :docroot => 'public'     # default current working directory
     :launchy => false        # default true
+    :suppress_log => true    # default false - suppresses command line log output
 
 ## Development
 
