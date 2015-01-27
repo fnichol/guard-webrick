@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = '>= 1.3.6'
   s.rubyforge_project = "guard-webrick"
 
-  s.add_dependency 'guard', '~> 1.0'
+  s.add_dependency 'guard', '>= 1.0'
   s.add_dependency 'spoon', '~> 0.0.1'
   s.add_dependency 'ffi'
   s.add_dependency 'launchy', '~> 2.1.0'
